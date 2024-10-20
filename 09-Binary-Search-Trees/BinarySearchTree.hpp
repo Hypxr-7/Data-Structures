@@ -24,8 +24,20 @@ private:
 public:
     BinarySearchTree() = default;
 
-    // ~BinarySearchTree();
+    ~BinarySearchTree() {
+        clear(m_root);
+    }
 
+private:
+    void clear(Node* node) {
+        if (node != nullptr) {
+            clear(node->left);
+            clear(node->right);
+            delete node;
+        }
+    }
+
+public:
     bool isEmpty() const { return size() == 0; }
 
     bool contains(const Key& key) const { return get(key) != Value{}; }
@@ -80,7 +92,11 @@ public:
 
 private:
     Node* deleteMin(Node* node) {
-        if (node->left == nullptr) return node->right;
+        if (node->left == nullptr) {
+            Node* temp = node->right;
+            delete node;
+            return temp;
+        }
         node->left = deleteMin(node->left);
         node->size = size(node->left) + size(node->right) + 1;
         return node;
@@ -94,7 +110,11 @@ public:
 
 private:
     Node* deleteMax(Node* node) {
-        if (node->right == nullptr) return node->left;
+        if (node->right == nullptr) {
+            Node* temp = node->left;
+            delete node;
+            return temp;
+        }
         node->right = deleteMax(node->right);
         node->size = size(node->left) + size(node->right) + 1;
         return node;
@@ -111,8 +131,16 @@ private:
         if (key < node->key) node->left = deleteKey(node->left, key);
         else if (key > node->key) node->right = deleteKey(node->right, key);
         else {
-            if (node->right == nullptr) return node->left;
-            if (node->left == nullptr) return node->right;
+            if (node->right == nullptr) {
+                Node* temp = node->left;
+                delete node; 
+                return temp;
+            }
+            if (node->left == nullptr) {
+                Node* temp = node->right;
+                delete node; 
+                return temp;
+            }
             Node* temp = node;
             node = min(temp->right);
             node->right = deleteMin(temp->right);
