@@ -33,3 +33,5 @@
 
 #direcroties
 bin/
+.vscode/
+.idea/
