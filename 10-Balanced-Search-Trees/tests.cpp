@@ -164,4 +164,7 @@ void testRedBlackBST() {
     assert((items == std::vector<int>{1, 5, 7}));
 
     assert(bst.height() == 1);
+
+    bst.put(8, "qux");
+    assert(bst.height() == 2);
 }

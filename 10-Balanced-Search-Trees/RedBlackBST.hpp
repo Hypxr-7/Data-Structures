@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cassert>
+#include <iostream>
 #include <stdexcept>
 #include <vector>
 
@@ -18,7 +20,9 @@ private:
             key(_key),
             value(_value),
             color(_color),
-            size(_size)
+            size(_size),
+            left(nullptr),
+            right(nullptr)
             {}
     };
 
@@ -99,6 +103,8 @@ public:
         }
         m_root = put(m_root, key, value);
         m_root->color = BLACK;
+
+        assert(check());
     }
 
 private:
@@ -126,14 +132,16 @@ public:
         if (!isRed(m_root->left) && !isRed(m_root->right)) m_root->color = RED;
         m_root = deleteMin(m_root);
         if (!isEmpty()) m_root->color = BLACK;
+        else m_root = nullptr;
+
+        assert(check());
     }
 
 private:
     Node* deleteMin(Node* node) {
         if (node->left == nullptr) {
-            Node* temp = node->right;
             delete node;
-            return temp;
+            return nullptr;
         }
 
         if (!isRed(node->left) && !isRed(node->left->left)) node = moveRedLeft(node);
@@ -148,6 +156,8 @@ public:
         if (!isRed(m_root->left) && !isRed(m_root->right)) m_root->color = RED;
         m_root = deleteMax(m_root);
         if (!isEmpty()) m_root->color = BLACK;
+
+        assert(check());
     }
 
 private:
@@ -155,9 +165,8 @@ private:
         if (isRed(node->left)) node = rotateRight(node);
 
         if (node->right == nullptr) {
-            Node* temp = node->left;
             delete node;
-            return temp;
+            return nullptr;
         }
         if (!isRed(node->right) && !isRed(node->right->left)) node = moveRedRight(node);
 
@@ -171,6 +180,9 @@ public:
         if (!isRed(m_root->left) && !isRed(m_root->right)) m_root->color = RED;
         m_root = deleteKey(m_root, key);
         if (!isEmpty()) m_root->color = BLACK;
+        else m_root = nullptr;
+
+        assert(check());
     }
 
 private:
@@ -180,7 +192,10 @@ private:
             node->left = deleteKey(node->left, key);
         } else {
             if (isRed(node->left)) node = rotateRight(node);
-            if (key == node->key && node->right == nullptr) return nullptr;
+            if (key == node->key && node->right == nullptr) {
+                delete node;
+                return nullptr;
+            }
             if (!isRed(node->right) && !isRed(node->right->left)) node = moveRedRight(node);
             if (key == node->key) {
                 Node* temp = min(node->right);
@@ -390,23 +405,73 @@ public:
  * Check integrity of red-black tree data structure
  * ********************/
 private:
-    bool check() const;
+    bool check() const {
+        if (!isBST()) std::cerr << "Not in symmetric order\n";
+        if (!isSizeConsistent()) std::cerr << "Subtree counts not consistent\n";
+        if (!isRankConsistent()) std::cerr << "Ranks not consistent\n";
+        if (!is23()) std::cerr << "Not a 2-3 tree\n";
+        if (!isBalanced()) std::cerr << "Not balanced\n";
 
-    bool isBST() const;
+        return isBST() && isSizeConsistent() && isRankConsistent() && is23() && isBalanced(); 
+    }
 
-    bool isBST(const Node* node, const Key& min, const Key& max) const;
+    bool isBST() const {
+        return isBST(m_root, Key{}, Key{});
+    }
 
-    bool isSizeConsistent() const;
+    bool isBST(Node* node, const Key& min, const Key& max) const {
+        if (node == nullptr) return true;
+        if (min != Key{} && node->key <= min) return false;
+        if (max != Key{} && node->key >= max) return false;
 
-    bool isSizeConsistent(const Node* node) const;
+        return isBST(node->left, min, node->key) && isBST(node->right, node->key, max);
+    }
 
-    bool isRankConsistent() const;
+    bool isSizeConsistent() const {
+        return isSizeConsistent(m_root);
+    }
 
-    bool is23() const;
+    bool isSizeConsistent(Node* node) const {
+        if (node == nullptr) return true;
+        if (node->size != size(node->left) + size(node->right) + 1) return false;
+        return isSizeConsistent(node->left) && isSizeConsistent(node->right);
+    }
 
-    bool is23(const Node* node) const;
+    bool isRankConsistent() const {
+        for (int i = 0; i < size(); ++i)
+            if (i != rank(select(i))) return false;
 
-    bool isBalanced() const;
+        for (const auto& key : keys())
+            if (key != select(rank(key))) return false;
 
-    bool isBalanced(const Node* node, int black) const;
+        return true;
+    }
+
+    bool is23() const {
+        return is23(m_root);
+    }
+
+    bool is23(Node* node) const {
+        if (node == nullptr) return true;
+
+        if (isRed(node->right)) return false;
+        if (node != m_root && isRed(node) && isRed(node->left)) return false;
+        return is23(node->left) && is23(node->right);
+    }
+
+    bool isBalanced() const {
+        int black = 0;
+        Node* node = m_root;
+        while (node != nullptr) {
+            if (!isRed(node)) ++black;
+            node = node->left;
+        }
+        return isBalanced(m_root, black);
+    }
+
+    bool isBalanced(Node* node, int black) const {
+        if (node == nullptr) return black == 0;
+        if (!isRed(node)) --black;
+        return isBalanced(node->left, black) && isBalanced(node->right, black);
+    }
 };
