@@ -35,7 +35,7 @@ private:
     // hash function for keys - returns value between 0 and m-1
     int hash(const Key& key) const {
         std::hash<Key> hash_fn;
-        return hash_fn(key) % m;  // Masks out the sign bit
+        return hash_fn(key) % m;
     }
 
 public:
