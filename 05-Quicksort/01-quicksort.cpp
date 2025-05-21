@@ -16,10 +16,19 @@ void quicksortWrapper(std::vector<T>& arr);
 void testQuicksortWrapper();
 
 int main() {
-    testQuicksortWrapper();
+    // testQuicksortWrapper();
+    std::vector<int> arr = {10, 50, 30, 70, 80, 60, 20, 90};
 
+    quicksortWrapper(arr);
     return 0;
 }
+
+template <typename T>
+void printArr(std::vector<T> arr) {
+    for (auto i : arr)
+        std::cout << i << ' ';
+    std::cout << '\n';
+} 
 
 template <typename T>
 int partition(std::vector<T>& arr, int low, int high) {
@@ -50,10 +59,18 @@ int partition(std::vector<T>& arr, int low, int high) {
 
 template <typename T>
 void quicksort(std::vector<T>& arr, int low, int high) {
+    // static int i = 0;
+    // i++;
+    // if (i > 4) return;
+
     if (high <= low) return;
     int j = partition(arr, low, high);
     quicksort(arr, low, j - 1);
+    std::cout << "Left Half: "; 
+    printArr(arr);
     quicksort(arr, j + 1, high);
+    std::cout << "Right Half: "; 
+    printArr(arr);
 }
 
 template <typename T>

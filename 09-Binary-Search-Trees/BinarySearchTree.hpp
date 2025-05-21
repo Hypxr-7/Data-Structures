@@ -290,4 +290,21 @@ private:
         if (max != Key{} && node->key >= max) return false;
         return isBST(node->left, min, node->key) && isBST(node->right, node->key, max); 
     }
+
+public:
+public:
+    double averagePathLength() {
+        int totalLength = 0;
+        int totalNodes = 0;
+        calculatePathLength(root, 0, totalLength, totalNodes);
+        return (totalNodes == 0) ? 0 : static_cast<double>(totalLength) / totalNodes;
+    }
+
+    void calculatePathLength(Node* node, int currentLength, int& totalLength, int& totalNodes) {
+        if (node == nullptr) return;
+        totalLength += currentLength;
+        totalNodes++;
+        calculatePathLength(node->left, currentLength + 1, totalLength, totalNodes);
+        calculatePathLength(node->right, currentLength + 1, totalLength, totalNodes);
+    }
 };
