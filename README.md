@@ -1,5 +1,7 @@
 # Data Structures <!-- omit in toc -->
 
+**(WIP)**
+
 This repository contains various data structures from the book: **Algorithms by Kevin Wayne 
 and Robert Sedgewick**
 
