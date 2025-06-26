@@ -28,6 +28,10 @@ and Robert Sedgewick**
   - [Quicksort (Dual Pivot)](#quicksort-dual-pivot)
   - [Quicksort (Three Way)](#quicksort-three-way)
   - [Quicksort (Bently-McIlroy)](#quicksort-bently-mcilroy)
+  - [Max Priority Queue](#max-priority-queue)
+  - [Min Priority Queue](#min-priority-queue)
+  - [Max Indexed Priority Queue](#max-indexed-priority-queue)
+  - [Min Indexed Priority Queue](#min-indexed-priority-queue)
 - [Searching](#searching)
   - [Sequential Search](#sequential-search)
   - [Binary Search](#binary-search)
@@ -100,11 +104,43 @@ and Robert Sedgewick**
 
 ## Union Find (Quick Find)
 
+| `QuickFindUF`                  |                                     |
+| ------------------------------ | ----------------------------------- |
+| `QuickFindUF(int p)`           | *initialize UF with p elements*     |
+| `int count()`                  | *number of components*              |
+| `int find(int p)`              | *ID of elements p*                  |
+| `bool connected(int p, int q)` | *are elements p and q connected?*   |
+| `void unite(int p, int q)`     | *add p and q to the same component* |
+
 ## Union Find (Quick Union)
+
+| `QuickUnionUF`                 |                                     |
+| ------------------------------ | ----------------------------------- |
+| `QuickUnionUF(int p)`          | *initialize UF with p elements*     |
+| `int count()`                  | *number of components*              |
+| `int find(int p)`              | *ID of elements p*                  |
+| `bool connected(int p, int q)` | *are elements p and q connected?*   |
+| `void unite(int p, int q)`     | *add p and q to the same component* |
 
 ## Union Find (Weighted Quick Union)
 
+| `WeightedQuickUnionUF`         |                                     |
+| ------------------------------ | ----------------------------------- |
+| `WeightedQuickUnionUF(int p)`  | *initialize UF with p elements*     |
+| `int count()`                  | *number of components*              |
+| `int find(int p)`              | *ID of elements p*                  |
+| `bool connected(int p, int q)` | *are elements p and q connected?*   |
+| `void unite(int p, int q)`     | *add p and q to the same component* |
+
 ## Union Find (Weighted Quick Union with Path Compression)
+
+| `WeightedQuickUnionPathCompressionUF`        |                                     |
+| -------------------------------------------- | ----------------------------------- |
+| `WeightedQuickUnionPathCompressionUF(int p)` | *initialize UF with p elements*     |
+| `int count()`                                | *number of components*              |
+| `int find(int p)`                            | *ID of elements p*                  |
+| `bool connected(int p, int q)`               | *are elements p and q connected?*   |
+| `void unite(int p, int q)`                   | *add p and q to the same component* |
 
 
 # Sorting
@@ -194,6 +230,42 @@ optimized quicksort with:
 2. uses median of 3 for smaller sub-arrays for pivot selection
 3. For larger, uses Tukey Ninther
 4. Uses Bently-McIlroy 3-way partitioning
+
+## Max Priority Queue
+
+| `MaxPQ<Key>`                                   |                                         |
+| ---------------------------------------------- | --------------------------------------- |
+| `MaxPQ<Key>()`                                 | *initialize empty PQ*                   |
+| `MaxPQ<Key>(std::vector<Key> items)`           | *initialize PQ with elements in vector* |
+| `MaxPQ<Key>(std::initializer_list<Key> items)` | *initialize PQ with elements in list*   |
+| `bool empty()`                                 | *is PQ empty?*                          |
+| `int size()`                                   | *number of elements in PQ*              |
+| `Key max()`                                    | *get the max element*                   |
+| `void insert(Key item)`                        | *add item into PQ*                      |
+| `Key deleteMax()`                              | *remove max item from PQ*               |
+| `std::vector<Key> getElements()`               | *retrieve underlying array*             |
+| `void clear()`                                 | *reset the PQ*                          |
+
+
+## Min Priority Queue
+
+| `MinPQ<Key>`                                   |                                         |
+| ---------------------------------------------- | --------------------------------------- |
+| `MinPQ<Key>()`                                 | *initialize empty PQ*                   |
+| `MinPQ<Key>(std::vector<Key> items)`           | *initialize PQ with elements in vector* |
+| `MinPQ<Key>(std::initializer_list<Key> items)` | *initialize PQ with elements in list*   |
+| `bool empty()`                                 | *is PQ empty?*                          |
+| `int size()`                                   | *number of elements in PQ*              |
+| `Key min()`                                    | *get the min element*                   |
+| `void insert(Key item)`                        | *add item into PQ*                      |
+| `Key deleteMin()`                              | *remove min item from PQ*               |
+| `std::vector<Key> getElements()`               | *retrieve underlying array*             |
+| `void clear()`                                 | *reset the PQ*                          |
+
+
+## Max Indexed Priority Queue
+
+## Min Indexed Priority Queue
 
 # Searching
 
