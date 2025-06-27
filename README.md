@@ -31,7 +31,9 @@ and Robert Sedgewick**
   - [Max Priority Queue](#max-priority-queue)
   - [Min Priority Queue](#min-priority-queue)
   - [Max Indexed Priority Queue](#max-indexed-priority-queue)
+  - [Max Indexed Priority Queue](#max-indexed-priority-queue-1)
   - [Min Indexed Priority Queue](#min-indexed-priority-queue)
+  - [Min Indexed Priority Queue](#min-indexed-priority-queue-1)
 - [Searching](#searching)
   - [Sequential Search](#sequential-search)
   - [Binary Search](#binary-search)
@@ -265,21 +267,185 @@ optimized quicksort with:
 
 ## Max Indexed Priority Queue
 
+## Max Indexed Priority Queue
+
+The `IndexMaxPQ<Key>` maintains a priority queue where each element has both an index (0 to maxCap-1) and a priority key, allowing efficient access and updates by index.
+
+| `IndexMaxPQ<Key>`                       |                                        |
+| --------------------------------------- | -------------------------------------- |
+| `IndexMaxPQ<Key>(int maxCap)`           | *initialize PQ with given capacity*    |
+| `bool empty()`                          | *is PQ empty?*                         |
+| `int size()`                            | *number of elements in PQ*             |
+| `bool contains(int i)`                  | *is given index in PQ?*                |
+| `void insert(int i, Key key)`           | *add element at index with priority*   |
+| `int maxIndex()`                        | *index with maximum priority*          |
+| `Key maxKey()`                          | *maximum priority key*                 |
+| `int removeMax()`                       | *remove and return max priority index* |
+| `Key keyOf(int i)`                      | *get priority key at index*            |
+| `void changeKey(int i, Key key)`        | *change priority at index*             |
+| `void increaseKey(int i, Key key)`      | *increase priority at index*           |
+| `void decreaseKey(int i, Key key)`      | *decrease priority at index*           |
+| `void remove(int i)`                    | *remove element at index*              |
+| `std::vector<int> indices()`            | *get all indices in heap order*        |
+| `std::vector<Key> keys_in_heap_order()` | *get all keys in heap order*           |
+
+
 ## Min Indexed Priority Queue
+
+## Min Indexed Priority Queue
+
+The `IndexMinPQ<Key>` maintains a priority queue where each element has both an index (0 to maxCap-1) and a priority key, allowing efficient access and updates by index. Elements with smaller keys have higher priority.
+
+| `IndexMinPQ<Key>`                       |                                        |
+| --------------------------------------- | -------------------------------------- |
+| `IndexMinPQ<Key>(int maxCap)`           | *initialize PQ with given capacity*    |
+| `bool empty()`                          | *is PQ empty?*                         |
+| `int size()`                            | *number of elements in PQ*             |
+| `bool contains(int i)`                  | *is given index in PQ?*                |
+| `void insert(int i, Key key)`           | *add element at index with priority*   |
+| `int minIndex()`                        | *index with minimum priority*          |
+| `Key minKey()`                          | *minimum priority key*                 |
+| `int removeMin()`                       | *remove and return min priority index* |
+| `Key keyOf(int i)`                      | *get priority key at index*            |
+| `void changeKey(int i, Key key)`        | *change priority at index*             |
+| `void decreaseKey(int i, Key key)`      | *decrease priority at index*           |
+| `void increaseKey(int i, Key key)`      | *increase priority at index*           |
+| `void remove(int i)`                    | *remove element at index*              |
+| `std::vector<int> indices()`            | *get all indices in heap order*        |
+| `std::vector<Key> keys_in_heap_order()` | *get all keys in heap order*           |
 
 # Searching
 
 ## Sequential Search
 
+The `SequentialSearchST<Key, Value>` implements an unordered symbol table using a linked list. It performs sequential search through all key-value pairs.
+
+| `SequentialSearchST<Key, Value>` |                                 |
+| -------------------------------- | ------------------------------- |
+| `SequentialSearchST()`           | *initialize empty symbol table* |
+| `bool empty()`                   | *is symbol table empty?*        |
+| `int size()`                     | *number of key-value pairs*     |
+| `bool contains(Key key)`         | *is given key in symbol table?* |
+| `Value get(Key key)`             | *get value associated with key* |
+| `void put(Key key, Value value)` | *insert key-value pair*         |
+| `void remove(Key key)`           | *remove key-value pair*         |
+| `std::vector<Key> keys()`        | *get all keys in symbol table*  |
+
+
 ## Binary Search
+
+The `BinarySearchST<Key, Value>` implements an ordered symbol table using two parallel sorted arrays. It performs binary search for efficient key lookup.
+
+| `BinarySearchST<Key, Value>`            |                                      |
+| --------------------------------------- | ------------------------------------ |
+| `BinarySearchST()`                      | *initialize empty symbol table*      |
+| `bool empty()`                          | *is symbol table empty?*             |
+| `int size()`                            | *number of key-value pairs*          |
+| `bool contains(Key key)`                | *is given key in symbol table?*      |
+| `Value get(Key key)`                    | *get value associated with key*      |
+| `void put(Key key, Value value)`        | *insert key-value pair*              |
+| `void remove(Key key)`                  | *remove key-value pair*              |
+| `void removeMin()`                      | *remove smallest key*                |
+| `void removeMax()`                      | *remove largest key*                 |
+| `Key min()`                             | *smallest key*                       |
+| `Key max()`                             | *largest key*                        |
+| `Key select(int k)`                     | *key of rank k*                      |
+| `int rank(Key key)`                     | *number of keys less than given key* |
+| `Key floor(Key key)`                    | *largest key ≤ given key*            |
+| `Key ceiling(Key key)`                  | *smallest key ≥ given key*           |
+| `int size(Key lo, Key hi)`              | *number of keys in range [lo, hi]*   |
+| `std::vector<Key> keys()`               | *all keys in sorted order*           |
+| `std::vector<Key> keys(Key lo, Key hi)` | *keys in range [lo, hi]*             |
+
 
 ## Binary Search Tree
 
+The `BST<Key, Value>` implements an ordered symbol table using a binary search tree. It maintains keys in sorted order and provides efficient search operations.
+
+| `BST<Key, Value>`                       |                                      |
+| --------------------------------------- | ------------------------------------ |
+| `BST()`                                 | *initialize empty BST*               |
+| `bool empty()`                          | *is BST empty?*                      |
+| `int size()`                            | *number of key-value pairs*          |
+| `bool contains(Key key)`                | *is given key in BST?*               |
+| `Value get(Key key)`                    | *get value associated with key*      |
+| `void put(Key key, Value value)`        | *insert key-value pair*              |
+| `void remove(Key key)`                  | *remove key-value pair*              |
+| `void removeMin()`                      | *remove smallest key*                |
+| `void removeMax()`                      | *remove largest key*                 |
+| `Key min()`                             | *smallest key*                       |
+| `Key max()`                             | *largest key*                        |
+| `Key select(int k)`                     | *key of rank k*                      |
+| `int rank(Key key)`                     | *number of keys less than given key* |
+| `Key floor(Key key)`                    | *largest key ≤ given key*            |
+| `Key ceiling(Key key)`                  | *smallest key ≥ given key*           |
+| `int size(Key lo, Key hi)`              | *number of keys in range [lo, hi]*   |
+| `std::vector<Key> keys()`               | *all keys in sorted order*           |
+| `std::vector<Key> keys(Key lo, Key hi)` | *keys in range [lo, hi]*             |
+| `int height()`                          | *height of the tree*                 |
+| `std::vector<Key> levelOrder()`         | *keys in level-order traversal*      |
+
 ## Red-Black Binary Search Tree
+
+The `RedBlackBST<Key, Value>` implements a self-balancing binary search tree using red-black tree properties. Guarantees logarithmic performance for all operations.
+
+| `RedBlackBST<Key, Value>`               |                                      |
+| --------------------------------------- | ------------------------------------ |
+| `RedBlackBST()`                         | *initialize empty red-black BST*     |
+| `bool empty()`                          | *is BST empty?*                      |
+| `int size()`                            | *number of key-value pairs*          |
+| `bool contains(Key key)`                | *is given key in BST?*               |
+| `Value get(Key key)`                    | *get value associated with key*      |
+| `void put(Key key, Value value)`        | *insert key-value pair*              |
+| `void remove(Key key)`                  | *remove key-value pair*              |
+| `void removeMin()`                      | *remove smallest key*                |
+| `void removeMax()`                      | *remove largest key*                 |
+| `Key min()`                             | *smallest key*                       |
+| `Key max()`                             | *largest key*                        |
+| `Key select(int k)`                     | *key of rank k*                      |
+| `int rank(Key key)`                     | *number of keys less than given key* |
+| `Key floor(Key key)`                    | *largest key ≤ given key*            |
+| `Key ceiling(Key key)`                  | *smallest key ≥ given key*           |
+| `int size(Key lo, Key hi)`              | *number of keys in range [lo, hi]*   |
+| `std::vector<Key> keys()`               | *all keys in sorted order*           |
+| `std::vector<Key> keys(Key lo, Key hi)` | *keys in range [lo, hi]*             |
+| `int height()`                          | *height of the tree*                 |
+
 
 ## Separate Chaining Hashing
 
+The `SeparateChainingHashST<Key, Value>` implements a hash table using separate chaining for collision resolution. Each bucket contains a linked list of key-value pairs that hash to the same location.
+
+| `SeparateChainingHashST<Key, Value>`  |                                       |
+| ------------------------------------- | ------------------------------------- |
+| `SeparateChainingHashST(int cap = 8)` | *initialize hash table with capacity* |
+| `bool empty()`                        | *is hash table empty?*                |
+| `int size()`                          | *number of key-value pairs*           |
+| `bool contains(Key key)`              | *is given key in hash table?*         |
+| `Value get(Key key)`                  | *get value associated with key*       |
+| `void put(Key key, Value value)`      | *insert key-value pair*               |
+| `void remove(Key key)`                | *remove key-value pair*               |
+| `std::vector<Key> keys()`             | *all keys in hash table*              |
+| `double loadFactor()`                 | *current load factor (n/m)*           |
+| `int capacity()`                      | *current table capacity*              |
+
+
 ## Linear Probing Hashing
+
+The `LinearProbingHashST<Key, Value>` implements a hash table using linear probing for collision resolution. When a collision occurs, it searches linearly for the next available slot.
+
+| `LinearProbingHashST<Key, Value>`  |                                       |
+| ---------------------------------- | ------------------------------------- |
+| `LinearProbingHashST(int cap = 8)` | *initialize hash table with capacity* |
+| `bool empty()`                     | *is hash table empty?*                |
+| `int size()`                       | *number of key-value pairs*           |
+| `bool contains(Key key)`           | *is given key in hash table?*         |
+| `Value get(Key key)`               | *get value associated with key*       |
+| `void put(Key key, Value value)`   | *insert key-value pair*               |
+| `void remove(Key key)`             | *remove key-value pair*               |
+| `std::vector<Key> keys()`          | *all keys in hash table*              |
+| `double loadFactor()`              | *current load factor (n/m)*           |
+| `int capacity()`                   | *current table capacity*              |
 
 # Graphs
 
@@ -347,13 +513,24 @@ optimized quicksort with:
 
 ## DAG - Shortest Paths
 
+TODO
+
 ## DAG - Longest Paths
+
+TODO
 
 ## Bellman Ford - Shortest Path
 
+TODO
+
 ## Edge Weighted Directed Cycle
+
+TODO
 
 ## Floyd Warshall - All Shortest Paths (Dense)
 
+TODO
+
 ## Adjacency Matrix - Edge Weighted Digraph
 
+TODO
